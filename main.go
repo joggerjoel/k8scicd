@@ -63,7 +63,23 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
             panic(err.Error())
 	}
 	fmt.Printf("GO PATH: %s\n",path)  // for example /home/user
+	files, err := ioutil.ReadDir("/")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, f := range files {
+	    	fmt.Println(f.Name())
+	}
 	files, err := ioutil.ReadDir("/go")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, f := range files {
+	    	fmt.Println(f.Name())
+	}
+	files, err := ioutil.ReadDir(".")
 	if err != nil {
 		log.Fatal(err)
 	}
