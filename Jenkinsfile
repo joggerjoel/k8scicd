@@ -15,7 +15,11 @@ pipeline {
                 // Create our project directory.
                 sh 'cd ${GOPATH}/src'
                 sh 'mkdir -p ${GOPATH}/src/hello-world'
-                // Copy all files in our Jenkins workspace to our project directory.                
+                // Copy all files in our Jenkins workspace to our project directory.
+                echo 'pwd'
+                sh 'pwd'
+                sh 'ls ..'
+                
                 sh 'cp -r ${WORKSPACE}/* ${GOPATH}/src/hello-world'
                 // Build the app.
                 sh 'rm -f go.mod'
@@ -37,6 +41,9 @@ pipeline {
                 sh 'mkdir -p ${GOPATH}/src/hello-world'
                 // Copy all files in our Jenkins workspace to our project directory.                
                 sh 'cp -r ${WORKSPACE}/* ${GOPATH}/src/hello-world'
+                echo 'pwd'
+                sh 'pwd'
+                sh 'ls ..'
 
                 // Remove cached test results.
                 sh 'go clean -cache'
