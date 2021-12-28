@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 	"time"
-
+        "os"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -56,7 +56,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 // creates the in-cluster config
 	path, err := os.Getwd()
 	if err != nil {
-	    log.Println(err)
+            panic(err.Error())
 	}
 	fmt.Println(path)  // for example /home/user
 	kubeconfig := flag.String("kubeconfig", "/go/.kube/config", "absolute path to the kubeconfig file")
