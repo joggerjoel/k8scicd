@@ -48,7 +48,8 @@ func GetPodDetails() () {
         panic(err.Error())
     }
 
-    IP = GetLocalIP()
+    var IP = GetLocalIP()
+    var name
     for {
         if IP != "" {
             break
