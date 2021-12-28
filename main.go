@@ -49,7 +49,7 @@ func GetPodDetails() () {
     }
 
     var IP = GetLocalIP()
-    var name
+    var name = ""
     for {
         if IP != "" {
             break
