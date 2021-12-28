@@ -95,6 +95,16 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	    	fmt.Println(f.Name())
 	}
 	
+	fmt.Printf("GO PATH: ../../..\n")  // for example /home/user
+	files4, err4 := ioutil.ReadDir("../../..")
+	if err4 != nil {
+		log.Fatal(err4)
+	}
+
+	for _, f := range files4 {
+	    	fmt.Println(f.Name())
+	}
+	
 	fmt.Printf("GO PATH: /go\n")  // for example /home/user
 	files3, err3 := ioutil.ReadDir("/go")
 	if err3 != nil {
