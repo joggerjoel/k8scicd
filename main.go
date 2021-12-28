@@ -59,7 +59,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
             panic(err.Error())
 	}
 	fmt.Printf("GO PATH: %s\n",path)  // for example /home/user
-	kubeconfig := flag.String("kubeconfig", "/var/lib/jenkins/workspace/config", "absolute path to the kubeconfig file")
+	kubeconfig := flag.String("kubeconfig", "config", "/var/lib/jenkins/workspace/")
 	flag.Parse()
 	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
 	if err != nil {
