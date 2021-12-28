@@ -63,7 +63,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Printf("GO PATH: %s\n",path)  // for example /home/user
 	var kubeconfig *string
-	kubeconfig = flag.String("kubeconfig", filepath.Join("/var/lib/jenkins/workspace", ".kube", "config"), "(optional) absolute path to the kubeconfig file")
+	kubeconfig = flag.String("kubeconfig", filepath.Join("/var/lib/jenkins/workspace", "config"), "(optional) absolute path to the kubeconfig file")
 
 	flag.Parse()
 
