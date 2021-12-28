@@ -52,9 +52,11 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// access the API to list pods
 	pods, _ := clientset.CoreV1().Pods("").List(context.TODO(), v1.ListOptions{})
 
-	w.Write([]byte("There are "))
-	w.Write([]byte(strconv.Itoa(len(pods.Items))))
-	w.Write([]byte("in the cluster"))
+	if (pods != nil && pods.Items != nil) {
+		w.Write([]byte("There are "))
+		w.Write([]byte(strconv.Itoa(len(pods.Items))))
+		w.Write([]byte("in the cluster"))
+	}
 	w.Write([]byte(`"}`))
 	
 	
