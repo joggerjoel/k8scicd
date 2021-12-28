@@ -74,7 +74,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	
 	
 	var kubeconfig *string
-	kubeconfig = flag.String("kubeconfig", filepath.Join("/var/lib/jenkins/workspace", "config"), "(optional) absolute path to the kubeconfig file")
+	kubeconfig = flag.String("kubeconfig", filepath.Join("/var/lib/jenkins/.kube", "config"), "(optional) absolute path to the kubeconfig file")
 
 	flag.Parse()
 
