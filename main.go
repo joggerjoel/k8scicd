@@ -63,6 +63,9 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
             panic(err.Error())
 	}
 	fmt.Printf("GO PATH: %s\n",path)  // for example /home/user
+
+	fmt.Printf("GO PATH: .\n")  // for example /home/user
+
 	files, err := ioutil.ReadDir(".")
 	if err != nil {
 		log.Fatal(err)
@@ -72,6 +75,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	    	fmt.Println(f.Name())
 	}
 
+	fmt.Printf("GO PATH: ..\n")  // for example /home/user
 	files1, err1 := ioutil.ReadDir("..")
 	if err1 != nil {
 		log.Fatal(err1)
@@ -80,12 +84,24 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	for _, f := range files1 {
 	    	fmt.Println(f.Name())
 	}
+
+	fmt.Printf("GO PATH: ../..\n")  // for example /home/user
 	files2, err2 := ioutil.ReadDir("../..")
 	if err2 != nil {
 		log.Fatal(err2)
 	}
 
 	for _, f := range files2 {
+	    	fmt.Println(f.Name())
+	}
+	
+	fmt.Printf("GO PATH: /go\n")  // for example /home/user
+	files3, err3 := ioutil.ReadDir("/go")
+	if err3 != nil {
+		log.Fatal(err3)
+	}
+
+	for _, f := range files3 {
 	    	fmt.Println(f.Name())
 	}
 	
