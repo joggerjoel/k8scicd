@@ -50,7 +50,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	pods, _ := clientset.CoreV1().Pods("").List(context.TODO(), v1.ListOptions{})
 	fmt.Printf("There are %d pods in the cluster\n", len(pods.Items))
 
-	w.Write([]byte(pods)
+	w.Write([]byte(pods))
 	w.Write([]byte(`"}`))
 	
 	
