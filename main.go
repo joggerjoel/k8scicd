@@ -30,6 +30,8 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
 	w.Write([]byte(`{"message": "Hello World: ", GetLocalIP()}`))
+	w.Write([]byte(GetLocalIP()))
+	w.Write([]byte(`}`))
 	
 	
 }
