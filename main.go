@@ -1,9 +1,7 @@
 package main
 
 import (
-  "os"
   "log"
-  "path/filepath"	
 
 	
 	"context"
