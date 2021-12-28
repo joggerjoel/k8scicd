@@ -1,13 +1,20 @@
 package main
 
 import (
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/rest"
-	"os"
-	"log"
-	"net/http"
-	"net"
+    "os"
+    "log"
+    "path/filepath"
+    "k8s.io/client-go/tools/clientcmd"
+    "k8s.io/client-go/kubernetes"
+    typev1 "k8s.io/client-go/kubernetes/typed/core/v1"
+    metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+    corev1 "k8s.io/api/core/v1"
+    "fmt"
+    "strings"
+    "errors"
+    "k8s.io/apimachinery/pkg/labels"
+    "net/http"
+    "net"
 )
 
 type Server struct{}
