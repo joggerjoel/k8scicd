@@ -1,20 +1,13 @@
 package main
 
 import (
-    "os"
-    "log"
-    "path/filepath"
-    "k8s.io/client-go/tools/clientcmd"
-    "k8s.io/client-go/kubernetes"
-    typev1 "k8s.io/client-go/kubernetes/typed/core/v1"
-    metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-    corev1 "k8s.io/api/core/v1"
-    "fmt"
-    "strings"
-    "errors"
-    "k8s.io/apimachinery/pkg/labels"
-    "net/http"
-    "net"
+  "context"
+  "fmt"
+  "k8s.io/apimachinery/pkg/apis/meta/v1"
+  "k8s.io/client-go/kubernetes"
+  "k8s.io/client-go/tools/clientcmd"
+  "net/http"
+  "net"
 )
 
 type Server struct{}
@@ -35,43 +28,6 @@ func GetLocalIP() string {
     }
     return ""
 }
-func getClient(configLocation string) (typev1.CoreV1Interface, error){
-    kubeconfig := filepath.Clean(configLocation)
-    config, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
-    if err != nil {
-        log.Fatal(err)
-    }
-    clientset, err := kubernetes.NewForConfig(config)
-    if err != nil {
-        return nil, err
-    }
-    return clientset.CoreV1(), nil
-}
-
-func getServiceForDeployment(deployment string, namespace string, k8sClient typev1.CoreV1Interface) (*corev1.Service, error){
-    listOptions := metav1.ListOptions{}
-    svcs, err := k8sClient.Services(namespace).List(listOptions)
-    if err != nil{
-        log.Fatal(err)
-    }
-    for _, svc:=range svcs.Items{
-        if strings.Contains(svc.Name, deployment){
-            fmt.Fprintf(os.Stdout, "service name: %v\n", svc.Name)
-            return &svc, nil
-        }
-    }
-    return nil, errors.New("cannot find service for deployment")
-}
-
-func getPodsForSvc(svc *corev1.Service, namespace string, k8sClient typev1.CoreV1Interface) (*corev1.PodList, error){
-    set := labels.Set(svc.Spec.Selector)
-    listOptions:= metav1.ListOptions{LabelSelector: set.AsSelector().String()}
-    pods, err:=  k8sClient.Pods(namespace).List(listOptions)
-    for _,pod:= range pods.Items{
-        fmt.Fprintf(os.Stdout, "pod name: %v\n", pod.Name)
-    }
-    return pods, err
-}
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	
@@ -81,6 +37,20 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(GetLocalIP()))
 	w.Write([]byte(`/`))
 	w.Write([]byte(GetLocalIP()))
+	
+	kubeconfig := filepath.Join(
+	    os.Getenv("HOME"), ".kube", "config",
+	)
+	// uses the current context in kubeconfig
+	// path-to-kubeconfig -- for example, /root/.kube/config
+	config, _ := clientcmd.BuildConfigFromFlags("", kubeconfig)
+	// creates the clientset
+	clientset, _ := kubernetes.NewForConfig(config)
+	// access the API to list pods
+	pods, _ := clientset.CoreV1().Pods("").List(context.TODO(), v1.ListOptions{})
+	fmt.Printf("There are %d pods in the cluster\n", len(pods.Items))
+
+	w.Write([]byte(pods)
 	w.Write([]byte(`"}`))
 	
 	
