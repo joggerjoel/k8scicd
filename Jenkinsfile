@@ -40,8 +40,7 @@ pipeline {
                 sh 'mkdir -p ${GOPATH}/.kube'
                 echo '${WORKSPACE}'
                 sh 'pwd'
-                sh 'ls ${WORKSPACE}'
-                sh 'cp -f ${WORKSPACE}/../config ${GOPATH}/.kube/'
+                sh 'ls -al ${GOPATH}'
                 // Remove cached test results.
                 sh 'go clean -cache'
                 // Run Unit Tests.
