@@ -8,7 +8,6 @@ import (
 	"time"
 	"path/filepath"
 	"io/ioutil"
-	"log"
 
         "os"
 	"k8s.io/apimachinery/pkg/api/errors"
