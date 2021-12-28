@@ -54,6 +54,11 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(GetLocalIP()))
 	
 // creates the in-cluster config
+	path, err := os.Getwd()
+	if err != nil {
+	    log.Println(err)
+	}
+	fmt.Println(path)  // for example /home/user
 	kubeconfig := flag.String("kubeconfig", "/go/.kube/config", "absolute path to the kubeconfig file")
 	flag.Parse()
 	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
