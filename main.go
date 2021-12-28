@@ -63,12 +63,9 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
             panic(err.Error())
 	}
 	fmt.Printf("GO PATH: %s\n",path)  // for example /home/user
-var kubeconfig *string
-	if home := homedir.HomeDir(); home != "" {
-		kubeconfig = flag.String("kubeconfig", filepath.Join(home, ".kube", "config"), "(optional) absolute path to the kubeconfig file")
-	} else {
-		kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
-	}
+	var kubeconfig *string
+	kubeconfig = flag.String("kubeconfig", filepath.Join("/var/lib/jenkins/workspace", ".kube", "config"), "(optional) absolute path to the kubeconfig file")
+
 	flag.Parse()
 
 	// use the current context in kubeconfig
