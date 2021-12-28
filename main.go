@@ -29,52 +29,42 @@ func GetLocalIP() string {
     }
     return ""
 }
-
-//
-// Pod infos
-//
-
-func GetPodDetails() () {
-
-    // creates the in-cluster config
-    config, err := rest.InClusterConfig()
+func getClient(configLocation string) (typev1.CoreV1Interface, error){
+    kubeconfig := filepath.Clean(configLocation)
+    config, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
     if err != nil {
-        panic(err.Error())
+        log.Fatal(err)
     }
-    // creates the clientset
     clientset, err := kubernetes.NewForConfig(config)
     if err != nil {
-        panic(err.Error())
+        return nil, err
     }
+    return clientset.CoreV1(), nil
+}
 
-    var IP = GetLocalIP()
-    var name = ""
-    for {
-        if IP != "" {
-            break
-        } else {
-            log.Printf("No IP for now.\n")
-        }
-
-        pods, err := clientset.CoreV1().Pods("default").List(metav1.ListOptions{})
-        if err != nil {
-            panic(err.Error())
-        }
-        for _, pod := range pods.Items {
-            pod, _ := clientset.CoreV1().Pods("default").Get(pod.Name, metav1.GetOptions{})
-            if pod.Name == os.Getenv("HOSTNAME") {
-                IP = pod.Status.PodIP
-            }
-        }
-
-        log.Printf("Waits...\n")
-        time.Sleep(1 * time.Second)
+func getServiceForDeployment(deployment string, namespace string, k8sClient typev1.CoreV1Interface) (*corev1.Service, error){
+    listOptions := metav1.ListOptions{}
+    svcs, err := k8sClient.Services(namespace).List(listOptions)
+    if err != nil{
+        log.Fatal(err)
     }
+    for _, svc:=range svcs.Items{
+        if strings.Contains(svc.Name, deployment){
+            fmt.Fprintf(os.Stdout, "service name: %v\n", svc.Name)
+            return &svc, nil
+        }
+    }
+    return nil, errors.New("cannot find service for deployment")
+}
 
-    name = os.Getenv("HOSTNAME")
-    log.Printf("Trying os.Getenv(\"HOSTNAME/IP\"): [%s][%s]\n", name, IP)
-
-    return IP
+func getPodsForSvc(svc *corev1.Service, namespace string, k8sClient typev1.CoreV1Interface) (*corev1.PodList, error){
+    set := labels.Set(svc.Spec.Selector)
+    listOptions:= metav1.ListOptions{LabelSelector: set.AsSelector().String()}
+    pods, err:=  k8sClient.Pods(namespace).List(listOptions)
+    for _,pod:= range pods.Items{
+        fmt.Fprintf(os.Stdout, "pod name: %v\n", pod.Name)
+    }
+    return pods, err
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -91,6 +81,28 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	kubeconfig := filepath.Join(
+	os.Getenv("HOME"), ".kube", "config",
+	)
+	namespace:="FOO"
+	k8sClient, err:= getClient(kubeconfig)
+	if err!=nil{
+	fmt.Fprintf(os.Stderr, "error: %v\n", err)
+	os.Exit(1)
+	}
+
+	svc, err:=getServiceForDeployment("APP_NAME", namespace, k8sClient)
+	if err!=nil{
+	fmt.Fprintf(os.Stderr, "error: %v\n", err)
+	os.Exit(2)
+	}
+
+	pods, err:=getPodsForSvc(svc, namespace, k8sClient)
+	if err!=nil{
+	fmt.Fprintf(os.Stderr, "error: %v\n", err)
+	os.Exit(2)
+	}
+	
 	s := &Server{}
 	http.Handle("/", s)
 	log.Fatal(http.ListenAndServe(":8080", nil))
