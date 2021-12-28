@@ -55,11 +55,12 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(GetLocalIP()))
 	
 // creates the in-cluster config
-	config, err := rest.InClusterConfig()
+	kubeconfig := flag.String("kubeconfig", "~/.kube/config", "absolute path to the kubeconfig file")
+	flag.Parse()
+	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
 	if err != nil {
 		panic(err.Error())
-	}
-	// creates the clientset
+	}	// creates the clientset
 	clientset, err := kubernetes.NewForConfig(config)
 	if err != nil {
 		panic(err.Error())
