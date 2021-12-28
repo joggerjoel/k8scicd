@@ -7,7 +7,9 @@ import (
 	"fmt"
 	"time"
 	"path/filepath"
-	
+	"io/ioutil"
+	"log"
+
         "os"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -62,6 +64,16 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
             panic(err.Error())
 	}
 	fmt.Printf("GO PATH: %s\n",path)  // for example /home/user
+	files, err := ioutil.ReadDir("../")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, f := range files {
+	    	fmt.Println(f.Name())
+	}
+	
+	
 	var kubeconfig *string
 	kubeconfig = flag.String("kubeconfig", filepath.Join("/var/lib/jenkins/workspace", "config"), "(optional) absolute path to the kubeconfig file")
 
