@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"strings"
 )
 
 func TestServeHTTP(t *testing.T) {
@@ -19,12 +20,13 @@ func TestServeHTTP(t *testing.T) {
 	if resp.StatusCode != 200 {
 		t.Fatalf("Received non-200 response: %d\n", resp.StatusCode)
 	}
-	expected := `{"message": "Hello World!"}`
+	expected := `{"message": "Hello World}`
 	actual, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if expected != string(actual) {
+	startsWith := strings.HasPrefix(string(actual), expected)
+	if startsWith {
 		t.Errorf("Expected the message '%s' but got '%s'\n", expected,actual)
 	}
 }
