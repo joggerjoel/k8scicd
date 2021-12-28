@@ -51,9 +51,8 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	clientset, _ := kubernetes.NewForConfig(config)
 	// access the API to list pods
 	pods, _ := clientset.CoreV1().Pods("").List(context.TODO(), v1.ListOptions{})
-	fmt.Printf("There are %d pods in the cluster\n", len(pods.Items))
 
-	w.Write([]byte(fmt.Sprint(pods.Items)))
+	w.Write([]byte("There are %d pods in the cluster\n", len(pods.Items)))
 	w.Write([]byte(`"}`))
 	
 	
