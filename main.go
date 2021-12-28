@@ -4,7 +4,6 @@ import (
 	"log"
 	"net/http"
 	"net"
-	"strings"
 )
 
 type Server struct{}
