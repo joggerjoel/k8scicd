@@ -5,7 +5,6 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"os"
-	"os/signal"
 	"time"
 	"log"
 	"net/http"
@@ -75,7 +74,7 @@ func GetPodDetails() () {
     name = os.Getenv("HOSTNAME")
     log.Printf("Trying os.Getenv(\"HOSTNAME/IP\"): [%s][%s]\n", name, IP)
 
-    return IP, name
+    return IP
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
