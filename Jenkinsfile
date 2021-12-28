@@ -40,7 +40,7 @@ pipeline {
                 // Remove cached test results.
                 sh 'go clean -cache'
                 // Run Unit Tests.
-                sh 'go test ./... -v -short'            
+                sh 'go test ./... -v -short -use-kubeconfig=true'            
             }
         }
         stage('Publish') {
