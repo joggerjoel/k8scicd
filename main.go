@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
-	"strings"
+	"net"
 )
 
 type Server struct{}
