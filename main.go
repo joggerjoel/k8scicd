@@ -53,7 +53,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	pods, _ := clientset.CoreV1().Pods("").List(context.TODO(), v1.ListOptions{})
 	fmt.Printf("There are %d pods in the cluster\n", len(pods.Items))
 
-	w.Write([]byte(pods))
+	w.Write([]byte(fmt.Sprint(pods.Items)))
 	w.Write([]byte(`"}`))
 	
 	
@@ -63,24 +63,6 @@ func main() {
 	kubeconfig := filepath.Join(
 	os.Getenv("HOME"), ".kube", "config",
 	)
-	namespace:="FOO"
-	k8sClient, err:= getClient(kubeconfig)
-	if err!=nil{
-	fmt.Fprintf(os.Stderr, "error: %v\n", err)
-	os.Exit(1)
-	}
-
-	svc, err:=getServiceForDeployment("APP_NAME", namespace, k8sClient)
-	if err!=nil{
-	fmt.Fprintf(os.Stderr, "error: %v\n", err)
-	os.Exit(2)
-	}
-
-	pods, err:=getPodsForSvc(svc, namespace, k8sClient)
-	if err!=nil{
-	fmt.Fprintf(os.Stderr, "error: %v\n", err)
-	os.Exit(2)
-	}
 	
 	s := &Server{}
 	http.Handle("/", s)
