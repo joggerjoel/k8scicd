@@ -38,6 +38,9 @@ pipeline {
                 // Copy all files in our Jenkins workspace to our project directory.                
                 sh 'cp -r ${WORKSPACE}/* ${GOPATH}/src/hello-world'
                 sh 'mkdir -p ${GOPATH}/.kube'
+                echo '${WORKSPACE}'
+                sh 'pwd'
+                sh 'ls ${WORKSPACE}'
                 sh 'cp -f ${WORKSPACE}/../config ${GOPATH}/.kube/'
                 // Remove cached test results.
                 sh 'go clean -cache'
