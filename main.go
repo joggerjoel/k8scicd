@@ -71,20 +71,20 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	for _, f := range files {
 	    	fmt.Println(f.Name())
 	}
-	files, err := ioutil.ReadDir("/go")
-	if err != nil {
-		log.Fatal(err)
+	files1, err1 := ioutil.ReadDir("/go")
+	if err1 != nil {
+		log.Fatal(err1)
 	}
 
-	for _, f := range files {
+	for _, f := range files1 {
 	    	fmt.Println(f.Name())
 	}
-	files, err := ioutil.ReadDir(".")
-	if err != nil {
-		log.Fatal(err)
+	files2, err2 := ioutil.ReadDir(".")
+	if err2 != nil {
+		log.Fatal(err2)
 	}
 
-	for _, f := range files {
+	for _, f := range files2 {
 	    	fmt.Println(f.Name())
 	}
 	
