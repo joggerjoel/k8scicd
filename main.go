@@ -106,7 +106,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	
 	fmt.Printf("GO PATH: /go\n")  // for example /home/user
-	files3, err3 := ioutil.ReadDir("/go")
+	files3, err3 := ioutil.ReadDir("/go/src/app")
 	if err3 != nil {
 		log.Fatal(err3)
 	}
@@ -117,7 +117,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	
 	
 	var kubeconfig *string
-	kubeconfig = flag.String("kubeconfig", filepath.Join("/kube/.kube", "config"), "(optional) absolute path to the kubeconfig file")
+	kubeconfig = flag.String("kubeconfig", filepath.Join("/go/src/app", "config"), "(optional) absolute path to the kubeconfig file")
 
 	flag.Parse()
 
