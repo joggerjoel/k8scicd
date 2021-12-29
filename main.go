@@ -5,7 +5,6 @@ import (
   "flag"
 	"context"
 	"fmt"
-	"time"
 	"path/filepath"
 
         "os"
