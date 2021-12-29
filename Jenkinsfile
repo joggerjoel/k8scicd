@@ -9,6 +9,7 @@ pipeline {
             agent { 
                 docker { 
                     image 'golang' 
+                    args '-v /var/lib/jenkins/.kube:/varlib/jenkins/.kube'
                 }
             }
             
@@ -19,7 +20,7 @@ pipeline {
                 // Copy all files in our Jenkins workspace to our project directory.
                 
                 sh 'cp -r ${WORKSPACE}/* ${GOPATH}/src/hello-world'
-                sh 'cp ${WORKSPACE}/../config ${GOPATH}/config'
+                sh 'cp /var/lib/jenkins/.kube/config ${GOPATH}/config'
                 // Build the app.
                 sh 'rm -f go.mod'
                 sh 'go mod init hello-world'
