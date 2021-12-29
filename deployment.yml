@@ -16,7 +16,8 @@ spec:
     spec:
       volumes:
       - name: kube-config
-        mountPath: /var/lib/jenkins/.kube
+        hostPath: 
+          path: /var/lib/jenkins/.kube/config
       containers:
       - name: app
         image: "{{ image_id }}"
@@ -25,7 +26,6 @@ spec:
             cpu: 10m
         volumeMounts:
         - name: kube-config
-          hostPath: 
-            path: /var/lib/jenkins/.kube/config
+          mountPath: /var/lib/jenkins/.kube
            
       
