@@ -16,9 +16,8 @@ spec:
     spec:
       volumes:
       - name: kube-config
-        mountPath: 
-          mountPath: /var/lib/jenkins/.kube/config
-          subPath: config
+        mountPath: /var/lib/jenkins/.kube/config
+        subPath: config
       containers:
       - name: app
         image: "{{ image_id }}"
