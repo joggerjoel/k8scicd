@@ -21,7 +21,8 @@ import (
 	// _ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
 	// _ "k8s.io/client-go/plugin/pkg/client/auth/oidc"
 	// _ "k8s.io/client-go/plugin/pkg/client/auth/openstack"
-	
+
+  "knative.dev/pkg/configmap"	
   "net/http"
   "net"
   "strconv"
@@ -56,25 +57,14 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(GetLocalIP()))
 	
 // creates the in-cluster config
-	path, err := os.Getwd()
-	if err != nil {
-            panic(err.Error())
-	}
-	fmt.Printf("GO PATH: %s\n",path)  // for example /home/user
-
 	var kubeconfig *string
-	kubeconfig = flag.String("kubeconfig", filepath.Join("/var/lib/jenkins/.kube", "config"), "(optional) absolute path to the kubeconfig file")
-
-	flag.Parse()
-
-	// use the current context in kubeconfig
-	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
+	kubeconfig, err := configmap.Load(CM_NAME)
 	if err != nil {
 		panic(err.Error())
 	}
 
 	// create the clientset
-	clientset, err := kubernetes.NewForConfig(config)
+	clientset, err := kubernetes.NewForConfig(kubeconfig)
 	if err != nil {
 		panic(err.Error())
 	}
