@@ -33,6 +33,8 @@ const (
 )
 
 type Server struct{}
+os.Setenv("KUBERNETES_SERVICE_HOST", "192.168.1.96")
+os.Setenv("KUBERNETES_SERVICE_PORT", 6443)
 
 // GetLocalIP returns the non loopback local IP of the host
 func GetLocalIP() string {
