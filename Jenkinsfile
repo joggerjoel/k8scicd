@@ -9,7 +9,7 @@ pipeline {
             agent { 
                 docker { 
                     image 'golang' 
-                    args '-v /var/lib/jenkins/.kube:/varlib/jenkins/.kube'
+                    args '-v /var/lib/jenkins/.kube:/var/lib/jenkins/.kube'
                 }
             }
             
