@@ -1,9 +1,6 @@
 FROM golang:alpine AS build-env
 RUN mkdir /go/src/app && apk update && apk add git
 ADD main.go /go/src/app/
-RUN mkdir -p /var/lib/jenkins/.kube
-ADD /var/lib/jenkins/.kube/config /var/lib/jenkins/.kube/config
-
 WORKDIR /go/src/app
 RUN go mod init
 RUN go mod tidy
