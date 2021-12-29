@@ -2,16 +2,17 @@ package main
 
 import (
   "log"
-  "flag"
+  //"flag"
 	"context"
 	"fmt"
-	"path/filepath"
+	//"path/filepath"
 
-        "os"
+      //  "os"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/tools/clientcmd"
+	"k8s.io/client-go/rest"
+	//"k8s.io/client-go/tools/clientcmd"
 	//
 	// Uncomment to load all auth plugins
 	// _ "k8s.io/client-go/plugin/pkg/client/auth"
@@ -61,8 +62,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(GetLocalIP()))
 	
 // creates the in-cluster config
-	var kubeconfig *string
-	kubeconfig, err := configmap.Load(CM_NAME)
+	kubeconfig, err := rest.InClusterConfig()
 	if err != nil {
 		panic(err.Error())
 	}
