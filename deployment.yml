@@ -19,11 +19,11 @@ spec:
         image: "{{ image_id }}"
         volumeMounts:
         - name: kube-config
-          mountPath: /var/lib/jenkins/workspace/.kube          
+          mountPath: /var/lib/jenkins/.kube          
         resources:
           requests:
             cpu: 10m
       volumes:
       - name: kube-config
         hostPath:
-          path: /var/lib/jenkins/workspace/.kube
+          path: /var/lib/jenkins/.kube
