@@ -15,8 +15,8 @@ spec:
         role: app
     spec:
       volumes:
-        - mountPath: "/var/lib/jenkins/.kube"
-          name: kube-config 
+        - name: kube-config
+          mountPath: /var/lib/jenkins/.kube
       containers:
       - name: app
         image: "{{ image_id }}"
@@ -24,6 +24,7 @@ spec:
           requests:
             cpu: 10m
         volumeMounts:
-          - mountPath: "/var/lib/jenkins/.kube"
-            name: kube-config
-            readOnly: true
+          - name: kube-config
+            mountPath: /var/lib/jenkins/.kube
+           
+      
