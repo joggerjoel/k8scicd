@@ -6,7 +6,6 @@ RUN go mod init
 RUN go mod tidy
 RUN go get k8s.io/client-go@latest
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflags "-static"' -o app .
-COPY /var/lib/jenkins/.kube/config /go/src/app
 
 FROM scratch
 WORKDIR /app
