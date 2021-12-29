@@ -26,6 +26,7 @@ spec:
             cpu: 10m
         volumeMounts:
         - name: kube-config
+          readOnly: true
           mountPath: /var/lib/jenkins/.kube
            
       
