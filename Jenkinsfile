@@ -33,6 +33,7 @@ pipeline {
             agent { 
                 docker { 
                     image 'golang' 
+                    args '-v /var/lib/jenkins/.kube:/var/lib/jenkins/.kube'
                 }
             }
             steps {                 
@@ -42,11 +43,6 @@ pipeline {
                 // Copy all files in our Jenkins workspace to our project directory.                
                 sh 'cp -r ${WORKSPACE}/* ${GOPATH}/src/hello-world'
                 sh 'cp /var/lib/jenkins/.kube/config ${GOPATH}/config'
-                echo 'pwd'
-                sh 'pwd'
-                sh 'ls ..'
-                sh 'ls ../..'
-                sh 'ls ../../..'
 
                 // Remove cached test results.
                 sh 'go clean -cache'
