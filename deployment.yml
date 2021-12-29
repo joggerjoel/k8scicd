@@ -17,6 +17,8 @@ spec:
       containers:
       - name: app
         image: "{{ image_id }}"
+        volumes:
+           - .kube:/var/lib/jenkins/workspace/.kube
         resources:
           requests:
             cpu: 10m
