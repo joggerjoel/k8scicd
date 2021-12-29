@@ -25,7 +25,7 @@ spec:
             cpu: 10m
         volumeMounts:
         - name: kube-config
-          mountPath: /var/lib/jenkins/.kube/
-          subPath: config
+          hostPath: /var/lib/jenkins/.kube/
+            subPath: config
            
       
