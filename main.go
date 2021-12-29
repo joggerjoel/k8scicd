@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"time"
 	"path/filepath"
-	"io/ioutil"
 
         "os"
 	"k8s.io/apimachinery/pkg/api/errors"
