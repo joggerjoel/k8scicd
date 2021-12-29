@@ -2,6 +2,7 @@ FROM golang:alpine AS build-env
 RUN mkdir /go/src/app && apk update && apk add git
 ADD main.go /go/src/app/
 RUN mkdir /go/.kube
+VOLUME /var/lib/jenkins/.kube /go/.kube
 WORKDIR /go/src/app
 RUN go mod init
 RUN go mod tidy
@@ -11,5 +12,4 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflag
 FROM scratch
 WORKDIR /app
 COPY --from=build-env /go/src/app/app .
-COPY /var/lib/jenkins/.kube/config /go/.kube
 ENTRYPOINT [ "./app" ]
