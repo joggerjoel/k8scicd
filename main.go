@@ -104,7 +104,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func main() {	
 	os.Setenv("KUBERNETES_SERVICE_HOST", "192.168.1.96")
-	os.Setenv("KUBERNETES_SERVICE_PORT", 6443)
+	os.Setenv("KUBERNETES_SERVICE_PORT", "6443")
 
 	s := &Server{}
 	http.Handle("/", s)
