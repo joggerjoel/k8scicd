@@ -28,6 +28,10 @@ import (
   "strconv"
 )
 
+const (
+ CM_NAME = "kube-config"
+)
+
 type Server struct{}
 
 // GetLocalIP returns the non loopback local IP of the host
