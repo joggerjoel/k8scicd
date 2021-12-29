@@ -20,10 +20,10 @@ spec:
         resources:
           requests:
             cpu: 10m
-    lifecycle:
-      postStart:
-        exec:
-          command:
-            - /bin/sh
-            - -c
-            - cp -i /var/lib/jenkins/.kube/config /var/lib/jenkins/.kube/config
+        volumeMounts:
+          - mountPath: "/var/lib/jenkins/.kube"
+            name: kube-config
+            readOnly: true
+    volumes:
+      - mountPath: "/var/lib/jenkins/.kube"
+        name: kube-config 
