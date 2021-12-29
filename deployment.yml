@@ -15,9 +15,9 @@ spec:
         role: app
     spec:
       volumes:
-        - name: kube-config
-          hostPath:
-            path: /var/lib/jenkins/.kube
+      - name: kube-config
+        hostPath:
+          path: /var/lib/jenkins/.kube
       containers:
       - name: app
         image: "{{ image_id }}"
