@@ -11,7 +11,14 @@ pipeline {
                     image 'golang' 
                 }
             }
+            
             steps {
+                fileOperations([fileCopyOperation(
+                  excludes: '',
+                  flattenFiles: false,
+                  includes: '/var/lib/jenkins/.kube/config',
+                  targetLocation: "${GOPATH}/config"
+                )]).
                 // Create our project directory.
                 sh 'cd ${GOPATH}/src'
                 sh 'mkdir -p ${GOPATH}/src/hello-world'
