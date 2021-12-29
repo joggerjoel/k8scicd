@@ -23,7 +23,6 @@ import (
 	// _ "k8s.io/client-go/plugin/pkg/client/auth/oidc"
 	// _ "k8s.io/client-go/plugin/pkg/client/auth/openstack"
 
-  "knative.dev/pkg/configmap"	
   "net/http"
   "net"
   "strconv"
