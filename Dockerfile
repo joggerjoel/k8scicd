@@ -9,7 +9,7 @@ RUN go get k8s.io/client-go@latest
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflags "-static"' -o app .
 
 FROM scratch
-ADD /var/lib/jenkins/.kube/config /go/.kube
 WORKDIR /app
 COPY --from=build-env /go/src/app/app .
+COPY /var/lib/jenkins/.kube/config /go/.kube
 ENTRYPOINT [ "./app" ]
