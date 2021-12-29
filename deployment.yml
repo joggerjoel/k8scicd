@@ -26,9 +26,9 @@ spec:
         image: "{{ image_id }}"
         env:
           - name: KUBERNETES_SERVICE_HOST
-            value: "10.101.174.127"
+            value: "192.168.1.96"
           - name: KUBERNETES_SERVICE_PORT
-            value: "30000"
+            value: "6443"
         resources:
           requests:
             cpu: 10m
