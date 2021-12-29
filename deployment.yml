@@ -16,20 +16,20 @@ spec:
     spec:
       volumes:
       - name: kube-config
-        mountPath: /var/lib/jenkins/.kube/config
-        subPath: config
+        configMap:
+           name: kube-config
+           items:
+           - key: config
+             path: config
       containers:
       - name: app
         image: "{{ image_id }}"
         resources:
           requests:
             cpu: 10m
-        volumeMounts:
-        - name: kube-config
-          configMap:
-             name: kube-config
-             items:
-             - key: config
-               path: config
-           
+      volumeMounts:
+      - name: kube-config
+        mountPath: /var/lib/jenkins/.kube/config
+        subPath: config
+
       
