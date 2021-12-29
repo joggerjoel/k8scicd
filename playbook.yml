@@ -6,17 +6,9 @@
       definition: "{{ lookup('template', 'service.yml') | from_yaml }}"
       validate_certs: no
       namespace: default
-    mounts:
-      - source: /var/lib/jenkins/.kube
-        target: /var/lib/jenkins/.kube
-        type: bind
   - name: Deploy the application
     k8s:
       state: present
       validate_certs: no
       namespace: default
       definition: "{{ lookup('template', 'deployment.yml') | from_yaml }}"
-    mounts:
-      - source: /var/lib/jenkins/.kube
-        target: /var/lib/jenkins/.kube
-        type: bind
