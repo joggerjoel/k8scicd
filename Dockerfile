@@ -1,6 +1,5 @@
 FROM golang:alpine AS build-env
-RUN mkdir /go/src/app && apk update && apk add git
-RUN /bin/sh -c "apk add --no-cache bash"
+RUN mkdir /go/src/app && apk update && apk add git && apk add --no-cache bash
 ADD main.go /go/src/app/
 WORKDIR /go/src/app
 RUN go mod init
