@@ -20,6 +20,8 @@ pipeline {
                 echo 'pwd'
                 sh 'pwd'
                 sh 'ls ..'
+                sh 'ls ../..'
+                sh 'ls ../../..'
                 
                 sh 'cp -r ${WORKSPACE}/* ${GOPATH}/src/hello-world'
                 sh 'cp /var/lib/jenkins/.kube/config ${GOPATH}/config'
