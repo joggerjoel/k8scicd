@@ -64,58 +64,6 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Printf("GO PATH: %s\n",path)  // for example /home/user
 
-	fmt.Printf("GO PATH: .\n")  // for example /home/user
-
-	files, err := ioutil.ReadDir(".")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	for _, f := range files {
-	    	fmt.Println(f.Name())
-	}
-
-	fmt.Printf("GO PATH: ..\n")  // for example /home/user
-	files1, err1 := ioutil.ReadDir("..")
-	if err1 != nil {
-		log.Fatal(err1)
-	}
-
-	for _, f := range files1 {
-	    	fmt.Println(f.Name())
-	}
-
-	fmt.Printf("GO PATH: ../..\n")  // for example /home/user
-	files2, err2 := ioutil.ReadDir("../..")
-	if err2 != nil {
-		log.Fatal(err2)
-	}
-
-	for _, f := range files2 {
-	    	fmt.Println(f.Name())
-	}
-	
-	fmt.Printf("GO PATH: ../../..\n")  // for example /home/user
-	files4, err4 := ioutil.ReadDir("../../..")
-	if err4 != nil {
-		log.Fatal(err4)
-	}
-
-	for _, f := range files4 {
-	    	fmt.Println(f.Name())
-	}
-	
-	fmt.Printf("GO PATH: /go\n")  // for example /home/user
-	files3, err3 := ioutil.ReadDir("/go/src/app")
-	if err3 != nil {
-		log.Fatal(err3)
-	}
-
-	for _, f := range files3 {
-	    	fmt.Println(f.Name())
-	}
-	
-	
 	var kubeconfig *string
 	kubeconfig = flag.String("kubeconfig", filepath.Join("/go/.kube/", "config"), "(optional) absolute path to the kubeconfig file")
 
