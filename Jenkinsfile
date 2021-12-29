@@ -13,12 +13,6 @@ pipeline {
             }
             
             steps {
-                fileOperations([fileCopyOperation(
-                  excludes: '',
-                  flattenFiles: false,
-                  includes: '/var/lib/jenkins/.kube/config',
-                  targetLocation: "${GOPATH}/config"
-                )]).
                 // Create our project directory.
                 sh 'cd ${GOPATH}/src'
                 sh 'mkdir -p ${GOPATH}/src/hello-world'
@@ -53,6 +47,8 @@ pipeline {
                 echo 'pwd'
                 sh 'pwd'
                 sh 'ls ..'
+                sh 'ls ../..'
+                sh 'ls ../../..'
 
                 // Remove cached test results.
                 sh 'go clean -cache'
