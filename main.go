@@ -62,7 +62,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 // creates the in-cluster config
 	host := os.Getenv("KUBERNETES_SERVICE_HOST")
 	port := os.Getenv("KUBERNETES_SERVICE_PORT")
-	fmt.Printf("Host: %s, Host: %s\n", host, port)
+	fmt.Printf("Host: %s, Port: %s\n", host, port)
 
 	kubeconfig, err := rest.InClusterConfig()
 	if err != nil {
