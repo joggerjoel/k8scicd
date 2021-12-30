@@ -77,6 +77,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	kubeconfig, err := rest.InClusterConfig()
 	if err != nil {
+		//http: panic serving 127.0.0.1:60630: open /var/run/secrets/kubernetes.io/serviceaccount/token: no such file or directory
 		panic(err.Error())
 	}
 
