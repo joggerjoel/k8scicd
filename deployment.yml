@@ -38,6 +38,3 @@ spec:
         - name: kube-config
           mountPath: /var/lib/jenkins/.kube/config
           subPath: config
-        - name: default-token-vb2q2
-          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-          readOnly: true
