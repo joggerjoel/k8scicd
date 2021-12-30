@@ -21,7 +21,7 @@ import (
 	// _ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
 	// _ "k8s.io/client-go/plugin/pkg/client/auth/oidc"
 	// _ "k8s.io/client-go/plugin/pkg/client/auth/openstack"
-
+  "os"
   "net/http"
   "net"
   "strconv"
@@ -60,6 +60,10 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(GetLocalIP()))
 	
 // creates the in-cluster config
+	host := os.Getenv("KUBERNETES_SERVICE_HOST")
+	port := os.Getenv("KUBERNETES_SERVICE_PORT")
+	fmt.Printf("Host: %s, Host: %s\n", host, port)
+
 	kubeconfig, err := rest.InClusterConfig()
 	if err != nil {
 		panic(err.Error())
