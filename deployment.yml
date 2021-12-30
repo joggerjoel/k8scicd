@@ -9,6 +9,12 @@ spec:
   selector:
     matchLabels:
       role: app
+  env:
+  - name: KUBERNETES_SERVICE_HOST
+    value: "192.168.1.96"
+  - name: KUBERNETES_SERVICE_PORT
+    value: "6443"
+
   template:
     metadata:
       labels:
@@ -31,8 +37,3 @@ spec:
         - name: kube-config
           mountPath: /var/lib/jenkins/.kube/config
           subPath: config
-        env:
-          - name: KUBERNETES_SERVICE_HOST
-            value: "192.168.1.96"
-          - name: KUBERNETES_SERVICE_PORT
-            value: "6443"
