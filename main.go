@@ -51,6 +51,16 @@ func GetLocalIP() string {
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	// Environ returns a copy of strings representing the environment,
+	// in the form "key=value".
+	for _, env := range os.Environ() {
+		// env is
+		envPair := strings.SplitN(env, "=", 2)
+		key := envPair[0]
+		value := envPair[1]
+
+		fmt.Printf("%s : %s\n", key, value)
+	}
 	
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
