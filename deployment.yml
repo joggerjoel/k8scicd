@@ -5,6 +5,7 @@ metadata:
   labels:
     role: app
 spec:
+  serviceAccountName: build-robot
   automountServiceAccountToken: false
   replicas: 3
   selector:
