@@ -4,8 +4,8 @@ metadata:
   name: hello-deployment
   labels:
     role: app
-automountServiceAccountToken: true
 spec:
+  automountServiceAccountToken: true
   replicas: 3
   selector:
     matchLabels:
