@@ -5,7 +5,7 @@ metadata:
   labels:
     role: app
 spec:
-  automountServiceAccountToken: true
+  automountServiceAccountToken: false
   replicas: 3
   selector:
     matchLabels:
