@@ -3,6 +3,8 @@ pipeline {
     environment {
         registry = "joggerjoel/k8scicd"
         GOCACHE = "/tmp"
+        KUBERNETES_SERVICE_HOST = "192.168.1.96"
+        KUBERNETES_SERVICE_PORT = "6443"
     }
     stages {
         stage('Build') {
