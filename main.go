@@ -10,7 +10,7 @@ import (
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/rest"
+	//"k8s.io/client-go/rest"
 	//"k8s.io/client-go/tools/clientcmd"
 	//
 	// Uncomment to load all auth plugins
@@ -21,6 +21,8 @@ import (
 	// _ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
 	// _ "k8s.io/client-go/plugin/pkg/client/auth/oidc"
 	// _ "k8s.io/client-go/plugin/pkg/client/auth/openstack"
+	"k8s.io/client-go/tools/clientcmd"
+	"k8s.io/client-go/util/homedir"
   "strings"
   "os"
   "net/http"
@@ -74,13 +76,28 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	host := os.Getenv("KUBERNETES_SERVICE_HOST")
 	port := os.Getenv("KUBERNETES_SERVICE_PORT")
 	fmt.Printf("Host: %s, Port: %s\n", host, port)
-
+/*
 	kubeconfig, err := rest.InClusterConfig()
 	if err != nil {
 		//http: panic serving 127.0.0.1:60630: open /var/run/secrets/kubernetes.io/serviceaccount/token: no such file or directory
 		panic(err.Error())
 	}
+*/
+	
+	var kubeconfig *string
+	if home := homedir.HomeDir(); home != "" {
+		kubeconfig = flag.String("kubeconfig", filepath.Join(home, ".kube", "config"), "(optional) absolute path to the kubeconfig file")
+	} else {
+		kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
+	}
+	flag.Parse()
 
+	// use the current context in kubeconfig
+	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
+	if err != nil {
+		panic(err.Error())
+	}
+	
 	// create the clientset
 	clientset, err := kubernetes.NewForConfig(kubeconfig)
 	if err != nil {
