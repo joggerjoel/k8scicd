@@ -22,19 +22,19 @@ spec:
            - key: config
              path: config
       containers:
-        env:
-          - name: KUBERNETES_SERVICE_HOST
-            value: "192.168.1.96"
-          - name: KUBERNETES_SERVICE_PORT
-            value: "6443"
       - name: app
         image: "{{ image_id }}"
         resources:
           requests:
             cpu: 10m
-      volumeMounts:
-      - name: kube-config
-        mountPath: /var/lib/jenkins/.kube/config
-        subPath: config
+        volumeMounts:
+        - name: kube-config
+          mountPath: /var/lib/jenkins/.kube/config
+          subPath: config
+        env:
+          - name: KUBERNETES_SERVICE_HOST
+            value: "192.168.1.96"
+          - name: KUBERNETES_SERVICE_PORT
+            value: "6443"
 
       
